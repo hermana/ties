@@ -1,0 +1,12 @@
+{
+  "name": "ties",
+  "version": "1.0.0",
+  "description": "A Phaser.js game with Stars and Ties",
+  "scripts": {
+    "start": "npx http-server -p 8000 -o",
+    "serve": "npx http-server -p 8000"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

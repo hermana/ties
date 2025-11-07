@@ -58,17 +58,35 @@ class Tie extends Phaser.GameObjects.Container {
         const star1WorldPos = this.star1.getWorldTransformMatrix();
         const star2WorldPos = this.star2.getWorldTransformMatrix();
         
+        // Calculate the direction vector from star1 to star2
+        const dx = star2WorldPos.tx - star1WorldPos.tx;
+        const dy = star2WorldPos.ty - star1WorldPos.ty;
+        
+        // Calculate the distance between the star centers
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        // Calculate the angle from star1 to star2
+        const angle = Math.atan2(dy, dx);
+        
+        // Calculate the start point on star1's circle edge (pointing toward star2)
+        const startX = star1WorldPos.tx + Math.cos(angle) * this.star1.radius;
+        const startY = star1WorldPos.ty + Math.sin(angle) * this.star1.radius;
+        
+        // Calculate the end point on star2's circle edge (pointing toward star1)
+        const endX = star2WorldPos.tx - Math.cos(angle) * this.star2.radius;
+        const endY = star2WorldPos.ty - Math.sin(angle) * this.star2.radius;
+        
         // Calculate the center point of the line for text positioning
-        const centerX = (star1WorldPos.tx + star2WorldPos.tx) / 2;
-        const centerY = (star1WorldPos.ty + star2WorldPos.ty) / 2;
+        const centerX = (startX + endX) / 2;
+        const centerY = (startY + endY) / 2;
         
         // Position the text at the center of the line
         this.text.setPosition(centerX, centerY);
         
-        // Draw line from star1 to star2
+        // Draw line from edge of star1 to edge of star2
         this.graphics.beginPath();
-        this.graphics.moveTo(star1WorldPos.tx, star1WorldPos.ty);
-        this.graphics.lineTo(star2WorldPos.tx, star2WorldPos.ty);
+        this.graphics.moveTo(startX, startY);
+        this.graphics.lineTo(endX, endY);
         this.graphics.strokePath();
     }
     

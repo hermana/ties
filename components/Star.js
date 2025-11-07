@@ -21,10 +21,58 @@ class Star extends Phaser.GameObjects.Container {
         this.text.setOrigin(0.5);
         this.add(this.text);
         
-        // Make the star interactive
-        this.circle.setInteractive();
-        this.circle.on('pointerdown', () => {
-            this.startTyping();
+        // Make the star interactive and draggable
+        // Set up a circular hit area with proper callback function
+        const hitArea = new Phaser.Geom.Circle(0, 0, radius);
+        const hitAreaCallback = Phaser.Geom.Circle.Contains;
+        
+        this.setInteractive(hitArea, hitAreaCallback);
+        
+        // Enable dragging
+        this.scene.input.setDraggable(this);
+        
+        // Track drag state and initial position
+        this.isDragging = false;
+        this.dragStartX = 0;
+        this.dragStartY = 0;
+        this.hasMoved = false;
+        
+        // Handle drag start
+        this.on('dragstart', (pointer) => {
+            this.isDragging = true;
+            this.hasMoved = false;
+            this.dragStartX = this.x;
+            this.dragStartY = this.y;
+        });
+        
+        // Handle dragging
+        this.on('drag', (pointer, dragX, dragY) => {
+            this.x = dragX;
+            this.y = dragY;
+            // Check if we've moved significantly
+            if (Math.abs(this.x - this.dragStartX) > 3 || Math.abs(this.y - this.dragStartY) > 3) {
+                this.hasMoved = true;
+            }
+        });
+        
+        // Handle drag end
+        this.on('dragend', () => {
+            // Only start typing if it was a click (no significant movement)
+            if (!this.hasMoved) {
+                this.startTyping();
+            }
+            this.isDragging = false;
+            this.hasMoved = false;
+        });
+        
+        // Handle pointer up for clicks (fallback if drag events don't fire)
+        this.on('pointerup', (pointer) => {
+            // Small delay to let dragend fire first if it's going to
+            setTimeout(() => {
+                if (!this.isDragging && !this.hasMoved) {
+                    this.startTyping();
+                }
+            }, 10);
         });
         
         // Add to scene

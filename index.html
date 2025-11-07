@@ -3,19 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Ties</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="game-container">
         <h1>Ties</h1>
+        <div id="button-container">
+            <button id="add-star-btn">Add Star</button>
+            <button id="add-tie-btn">Add Tie</button>
+        </div>
         <div id="game"></div>
     </div>
     
     <!-- Phaser.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.min.js"></script>
-    <script src="components/Star.js"></script>
-    <script src="components/Tie.js"></script>
-    <script src="main.js"></script>
+    <script src="components/Star.js?v=5"></script>
+    <script src="components/Tie.js?v=3"></script>
+    <script src="main.js?v=6" type="module"></script>
 </body>
 </html>

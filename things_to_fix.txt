@@ -1,0 +1,8 @@
+1. The angles for the Ties class. There is no way we need the tangent to calculate where they should stop/end??
+2. Cannot type on more than one entry of the ties - it just hangs. 
+3. For some reason, I can't move one of the circles.
+4. The add tie is clunky- it works on double-click, sometimes, and sometimes highlights the circles.  
+
+
+Credits:
+https://alkakrab.itch.io/pianoinstrumental this is the music 
